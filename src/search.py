@@ -1,14 +1,13 @@
+
 """Search (Chapters 3-4)
 
 The way to use this code is to subclass Problem to create a class of problems,
 then create problem instances and solve them with calls to the various search
 functions."""
 
-
 from utils import *
 import random
 import sys
-
 
 # ______________________________________________________________________________
 
@@ -97,16 +96,19 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
-    expandedNodes = 0
+    generatedNodes = 0
+    visitedNodes = 0
     while fringe:
         node = fringe.pop()
+        visitedNodes += 1
         if problem.goal_test(node.state):
-            print("Nodos expandidos: ", expandedNodes)
+            print("Nodos generados: ", generatedNodes)
+            print("Nodos visitados: ", visitedNodes)
             return node
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
-            expandedNodes += 1
+            generatedNodes += len(node.expand(problem))
     return None
 
 
@@ -125,6 +127,9 @@ def  branch_and_bound_search(problem):
     return graph_search(problem, SortQueue())
 
 
+def  branch_and_bound_with_underestimation_search(problem):
+    """Expand the least cost+heuristic"""
+    return graph_search(problem, SortQueue2(problem))
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.
 

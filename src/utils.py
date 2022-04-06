@@ -1,4 +1,4 @@
-
+import math
 #______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
 
@@ -561,8 +561,29 @@ class SortQueue(Queue):
 
     def extend(self, items):
         self.A.extend(items)
+
         self.A.sort(key=lambda node: node.path_cost, reverse=True)
 
+    def pop(self):
+        return self.A.pop()
+
+
+class SortQueue2(Queue):
+    """A Sort Queue."""
+
+    def __init__(self, problem):
+        self.problem = problem
+        self.A = []
+
+    def append(self, item):
+        self.A.append(item)
+
+    def __len__(self):
+        return len(self.A)
+
+    def extend(self, items):
+        self.A.extend(items)
+        self.A.sort(key=lambda node: node.path_cost + self.problem.h(node), reverse=True)
 
     def pop(self):
         return self.A.pop()
