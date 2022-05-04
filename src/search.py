@@ -96,12 +96,13 @@ def graph_search(problem, fringe):
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
     fringe.append(Node(problem.initial))
-    generatedNodes = 1 #Porque ya se ha introducido el nodo inicial
+    generatedNodes = 0 #Porque ya se ha introducido el nodo inicial
     visitedNodes = 0
     while fringe:
         node = fringe.pop()
         visitedNodes += 1
         if problem.goal_test(node.state):
+            generatedNodes+=1
             print("Nodos generados: ", generatedNodes)
             print("Nodos visitados: ", visitedNodes)
             print("Coste total: ", node.path_cost)
@@ -109,7 +110,7 @@ def graph_search(problem, fringe):
         if node.state not in closed:
             closed[node.state] = True
             fringe.extend(node.expand(problem))
-            generatedNodes += len(node.expand(problem))
+            generatedNodes += len(node.expand(problem)) #len(node.expand(problem)) =longitud del array nodos expandidos
     return None
 
 
@@ -255,7 +256,7 @@ australia.locations = Dict(WA=(120, 24), NT=(135, 20), SA=(135, 30),
                            Q=(145, 20), NSW=(145, 32), T=(145, 42), V=(145, 37))
 
 
-class GPSProblem(Problem):
+class GPSProblem(Problem): #Extiende de la clase problem
     """The problem of searching in a graph from one node to another."""
 
     def __init__(self, initial, goal, graph):

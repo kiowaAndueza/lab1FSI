@@ -561,7 +561,6 @@ class SortQueue(Queue):
 
     def extend(self, items):
         self.A.extend(items)
-
         self.A.sort(key=lambda node: node.path_cost, reverse=True)
 
     def pop(self):
@@ -583,7 +582,7 @@ class SortQueue2(Queue):
 
     def extend(self, items):
         self.A.extend(items)
-        self.A.sort(key=lambda node: node.path_cost + self.problem.h(node), reverse=True)
+        self.A.sort(key=lambda node: node.path_cost + self.problem.h(node), reverse=True) #self=this java
 
     def pop(self):
         return self.A.pop()
